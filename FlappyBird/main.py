@@ -225,25 +225,41 @@ def main(genomes,config):
             ge[x].fitness += 0.5
 
             output = nets[x].activate((bird.y,abs(bird.y-pipes[pipe_ind].height),abs(bird.y-pipes[pipe_ind].button)))
-            if output[0] > 0.3:
+            if output[0] > 0.5 :
                 bird.jump()
         rem = []
         for pipe in pipes:
             for x,bird in enumerate(birds):
+
+                if bird.y > pipe.height + 30 and bird.y < pipe.height + 70:
+                    ge[x].fitness += 2
+                
                 if pipe.collide(bird):
                     ge[x].fitness -= 100
                     birds.pop(x)
                     nets.pop(x)
                     ge.pop(x)
-                if not pipe.passed and pipe.x < bird.x:
+                
+
+                if not pipe.passed and pipe.x +15< bird.x:
                     pipe.passed = True
                     add_pipe = True
+                
+                
+
            
             if pipe.x + pipe.pipe_top.get_width() < 0:
                 rem.append(pipe)
             
             
             pipe.move()
+
+            if bird.y > pipe.height + 110:
+                    bird.jump()
+            if bird.y > pipe.height + 110:
+                    bird.jump()
+            if bird.y > pipe.height + 110:
+                    bird.jump()
         if add_pipe:
             score += 1
             for g in ge:
